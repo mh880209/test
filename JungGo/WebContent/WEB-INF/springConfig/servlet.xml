@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- @Controller, @Repository, @Service -->
+	<context:component-scan base-package="myproj"></context:component-scan>
+
+
+
+	<!-- JNDI  -->
+    <beans:bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<beans:property name="jndiName" value="java:comp/env/jdbc/myora" />
+	</beans:bean>
+	
+	
+	
+	<!-- MyBatis설정 -->
+<!-- 	<beans:bean id="factoryBean" class="org.mybatis.spring.SqlSessionFactoryBean"> -->
+<!-- 		<beans:property name="dataSource" ref="dataSource" /> -->
+<!-- 		<beans:property name="configLocation" value="classpath:mybatis/config/config.xml" /> -->
+<!-- 		<beans:property name="mapperLocations" value="classpath*:mybatis/mapper/*.xml" /> -->
+<!-- 	</beans:bean> -->
+<!-- 	<beans:bean id="ss" class="org.mybatis.spring.SqlSessionTemplate"> -->
+<!-- 		<beans:constructor-arg ref="factoryBean" /> -->
+<!-- 	</beans:bean> -->
+     
+     
+     
+	<!-- @ResponseBody 데이터 한글 설정 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<beans:bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<beans:property name="supportedMediaTypes">
+					<beans:list>
+						<beans:value>text/html;charset=UTF-8</beans:value>
+					</beans:list>
+				 
+				</beans:property>
+			</beans:bean>
+			
+		</mvc:message-converters>
+	
+	</mvc:annotation-driven>
+     
+     
+     
+     <!-- 뷰 리졸버 설정 -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/view/" /> <!-- setPrefix() 호출 -->
+		<beans:property name="suffix" value=".jsp" /> <!-- setSuffix() 호출 -->
+	</beans:bean>
+
+
+	
+</beans:beans>
